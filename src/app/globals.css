@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-dubai-navy: #0A1628;
+  --color-dubai-navy-light: #1A2744;
+  --color-dubai-gold: #C8A45C;
+  --color-dubai-gold-light: #E8D5A3;
+  --color-dubai-off-white: #F8F6F2;
+  --color-whatsapp: #25D366;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: #ffffff;
+  color: #0A1628;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #C8A45C;
+  border-radius: 4px;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #C8A45C;
+  box-shadow: 0 0 0 3px rgba(200, 164, 92, 0.1);
+}
