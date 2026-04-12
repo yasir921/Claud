@@ -4,13 +4,8 @@ import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useCVStore } from "@/lib/cv-store";
 import {
-  FileText,
-  Download,
-  Share2,
-  CheckCircle,
-  Loader2,
-  MessageCircle,
-  PartyPopper,
+  FileText, Download, Share2, CheckCircle, Loader2,
+  MessageCircle, PartyPopper, Sparkles,
 } from "lucide-react";
 
 function SuccessContent() {
@@ -39,120 +34,82 @@ function SuccessContent() {
   );
 
   return (
-    <div className="min-h-screen bg-dubai-off-white flex flex-col">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-100">
-        <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-center">
-          <span className="flex items-center gap-2 font-bold text-dubai-navy">
-            <FileText className="text-dubai-gold" size={24} />
-            CV<span className="text-dubai-gold">Dubai</span>
+    <div className="min-h-screen bg-gradient-to-b from-surface to-white flex flex-col">
+      <header className="glass border-b border-white/40">
+        <div className="max-w-lg mx-auto px-4 py-3.5 flex items-center justify-center">
+          <span className="flex items-center gap-2.5 font-bold text-heading">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <FileText className="text-white" size={16} />
+            </div>
+            CV<span className="gradient-text">Dubai</span>
           </span>
         </div>
       </header>
 
       <div className="flex-1 flex items-center justify-center px-4 py-10">
-        <div className="max-w-md w-full text-center space-y-6">
-          {/* Success Animation */}
+        <div className="max-w-md w-full text-center space-y-6 animate-fade-in-up">
+          {/* Success */}
           <div className="relative inline-block">
-            <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-              <CheckCircle className="text-green-500" size={40} />
+            <div className="w-20 h-20 rounded-full bg-success/10 flex items-center justify-center mx-auto animate-scale-in">
+              <CheckCircle className="text-success" size={40} />
             </div>
-            <PartyPopper
-              className="absolute -top-2 -right-2 text-dubai-gold"
-              size={24}
-            />
+            <PartyPopper className="absolute -top-2 -right-2 text-primary animate-float" size={24} />
+            <Sparkles className="absolute -bottom-1 -left-2 text-accent animate-float" size={20} style={{ animationDelay: "0.5s" }} />
           </div>
 
           <div>
-            <h1 className="text-2xl font-bold text-dubai-navy">
-              Payment Successful!
-            </h1>
-            <p className="text-gray-500 mt-2">
-              Your {tier === "premium" ? "Premium Package" : "Professional CV"}{" "}
-              is ready for download
+            <h1 className="text-2xl font-extrabold text-heading">Payment Successful!</h1>
+            <p className="text-body mt-2">
+              Your {tier === "premium" ? "Premium Package" : "Professional CV"} is ready
             </p>
             {sessionId && (
-              <p className="text-xs text-gray-300 mt-1">Ref: {sessionId.slice(0, 20)}...</p>
+              <p className="text-xs text-muted mt-1">Ref: {sessionId.slice(0, 20)}...</p>
             )}
           </div>
 
-          {/* Download Button */}
-          <button
-            onClick={handleDownload}
-            disabled={downloading}
-            className="w-full py-4 bg-dubai-gold text-dubai-navy font-bold text-lg rounded-2xl hover:brightness-110 transition-all shadow-xl shadow-dubai-gold/30 disabled:opacity-70 flex items-center justify-center gap-2"
-          >
+          {/* Download */}
+          <button onClick={handleDownload} disabled={downloading}
+            className="w-full py-4 btn-primary text-white font-bold text-lg rounded-2xl shadow-xl disabled:opacity-70 flex items-center justify-center gap-2">
             {downloading ? (
-              <>
-                <Loader2 className="animate-spin" size={20} />
-                Generating your CV...
-              </>
+              <><Loader2 className="animate-spin" size={20} /> Generating your CV...</>
             ) : (
-              <>
-                <Download size={20} />
-                Download My CV (PDF)
-              </>
+              <><Download size={20} /> Download My CV (PDF)</>
             )}
           </button>
 
           {tier === "premium" && (
-            <div className="bg-white rounded-2xl p-5 text-left border border-gray-100">
-              <h3 className="font-bold text-dubai-navy mb-2">
-                Premium Extras
+            <div className="bg-white rounded-2xl p-5 text-left border border-border/50 shadow-sm">
+              <h3 className="font-bold text-heading mb-2 flex items-center gap-2">
+                <Sparkles size={16} className="text-primary" /> Premium Extras
               </h3>
-              <p className="text-sm text-gray-500 mb-3">
-                Your premium package includes:
-              </p>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>&#10003; Cover letter template (included in PDF)</li>
-                <li>&#10003; LinkedIn summary copied to clipboard</li>
+              <ul className="text-sm text-body space-y-1.5">
+                <li className="flex items-center gap-2"><CheckCircle size={14} className="text-success" /> Cover letter template included in PDF</li>
+                <li className="flex items-center gap-2"><CheckCircle size={14} className="text-success" /> LinkedIn summary ready to copy</li>
               </ul>
             </div>
           )}
 
-          {/* Share Section */}
-          <div className="bg-dubai-navy rounded-2xl p-6 text-white">
-            <h3 className="font-bold text-lg mb-2">
-              Help Your Friends Too
-            </h3>
-            <p className="text-gray-300 text-sm mb-4">
-              Know someone who got laid off? Share CVDubai with them. A great CV
-              can change their life.
+          {/* Share */}
+          <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl p-6 border border-primary/10">
+            <h3 className="font-bold text-heading text-lg mb-2">Help Your Friends Too</h3>
+            <p className="text-body text-sm mb-5">
+              Know someone who got laid off? Share CVDubai with them. A great CV can change their life.
             </p>
-            <a
-              href={`https://wa.me/?text=${whatsappMessage}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2 py-3 bg-whatsapp text-white font-bold rounded-xl hover:brightness-110 transition-all"
-            >
-              <MessageCircle size={20} />
-              Share on WhatsApp
+            <a href={`https://wa.me/?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center gap-2 py-3.5 bg-whatsapp text-white font-bold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-whatsapp/20">
+              <MessageCircle size={20} /> Share on WhatsApp
             </a>
-            <button
-              onClick={() => {
-                if (navigator.share) {
-                  navigator.share({
-                    title: "CVDubai - Professional CV Builder",
-                    text: "Build a professional CV in 5 minutes! Perfect for job hunting in Dubai.",
-                    url: baseUrl,
-                  });
-                }
-              }}
-              className="w-full mt-2 inline-flex items-center justify-center gap-2 py-3 bg-white/10 text-white font-semibold rounded-xl hover:bg-white/20 transition-all"
-            >
-              <Share2 size={18} />
-              Share via Other Apps
+            <button onClick={() => {
+              if (navigator.share) {
+                navigator.share({ title: "CVDubai - Professional CV Builder", text: "Build a professional CV in 5 minutes!", url: baseUrl });
+              }
+            }} className="w-full mt-2 inline-flex items-center justify-center gap-2 py-3 bg-white text-body font-semibold rounded-xl border border-border/50 hover:bg-surface transition-all">
+              <Share2 size={18} /> Share via Other Apps
             </button>
           </div>
 
-          {/* Build another */}
-          <button
-            onClick={() => {
-              store.reset();
-              window.location.href = "/build";
-            }}
-            className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
-          >
+          <button onClick={() => { store.reset(); window.location.href = "/build"; }}
+            className="text-sm text-muted hover:text-primary transition-colors font-medium">
             Build another CV
           </button>
         </div>
@@ -163,13 +120,11 @@ function SuccessContent() {
 
 export default function SuccessPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen flex items-center justify-center">
-          <Loader2 className="animate-spin text-dubai-gold" size={32} />
-        </div>
-      }
-    >
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-surface">
+        <Loader2 className="animate-spin text-primary" size={32} />
+      </div>
+    }>
       <SuccessContent />
     </Suspense>
   );

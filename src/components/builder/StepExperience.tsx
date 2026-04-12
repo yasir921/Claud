@@ -1,7 +1,7 @@
 "use client";
 
 import { Experience } from "@/types/cv";
-import { Plus, Trash2, Briefcase } from "lucide-react";
+import { Plus, Trash2, Briefcase, ArrowRight, ArrowLeft } from "lucide-react";
 
 interface StepExperienceProps {
   data: Experience[];
@@ -13,174 +13,105 @@ interface StepExperienceProps {
 }
 
 export default function StepExperience({
-  data,
-  onAdd,
-  onUpdate,
-  onRemove,
-  onNext,
-  onBack,
+  data, onAdd, onUpdate, onRemove, onNext, onBack,
 }: StepExperienceProps) {
   const addNewExperience = () => {
     onAdd({
-      id: crypto.randomUUID(),
-      company: "",
-      position: "",
-      startDate: "",
-      endDate: "",
-      current: false,
-      description: "",
+      id: crypto.randomUUID(), company: "", position: "",
+      startDate: "", endDate: "", current: false, description: "",
     });
   };
 
+  const inputClass =
+    "w-full px-4 py-3.5 rounded-xl border border-border bg-white text-heading placeholder:text-muted/60 transition-all duration-200 text-sm";
+
   return (
-    <div className="space-y-5 animate-in fade-in">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-dubai-navy">Work Experience</h2>
-        <p className="text-gray-500 mt-1">Add your professional experience</p>
+    <div className="space-y-5 animate-fade-in">
+      <div className="text-center mb-8">
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/5 flex items-center justify-center mx-auto mb-4">
+          <Briefcase className="text-primary" size={24} />
+        </div>
+        <h2 className="text-2xl font-extrabold text-heading">Work Experience</h2>
+        <p className="text-muted mt-1.5 text-sm">Add your professional experience</p>
       </div>
 
       {data.length === 0 && (
-        <div className="text-center py-10 border-2 border-dashed border-gray-200 rounded-2xl">
-          <Briefcase className="mx-auto text-gray-300 mb-3" size={48} />
-          <p className="text-gray-400 mb-4">No experience added yet</p>
-          <button
-            onClick={addNewExperience}
-            className="px-6 py-3 bg-dubai-gold text-white rounded-xl font-semibold hover:brightness-110 transition-all"
-          >
-            <Plus className="inline mr-1" size={18} />
-            Add Experience
+        <div className="text-center py-12 border-2 border-dashed border-border rounded-2xl bg-surface/50">
+          <Briefcase className="mx-auto text-muted/30 mb-3" size={48} />
+          <p className="text-muted mb-5">No experience added yet</p>
+          <button onClick={addNewExperience} className="btn-primary px-6 py-3 text-white rounded-xl font-semibold inline-flex items-center gap-2 shadow-lg">
+            <Plus size={18} /> Add Experience
           </button>
         </div>
       )}
 
-      {data.map((exp, index) => (
-        <div
-          key={exp.id}
-          className="p-5 border border-gray-200 rounded-2xl space-y-4 bg-white shadow-sm"
-        >
-          <div className="flex justify-between items-center">
-            <h3 className="font-bold text-dubai-navy">Experience #{index + 1}</h3>
-            <button
-              onClick={() => onRemove(exp.id)}
-              className="text-red-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-all"
-            >
-              <Trash2 size={18} />
-            </button>
-          </div>
+      <div className="space-y-4 stagger">
+        {data.map((exp, index) => (
+          <div key={exp.id} className="p-5 border border-border/60 rounded-2xl space-y-4 bg-white shadow-sm card-hover">
+            <div className="flex justify-between items-center">
+              <h3 className="font-bold text-heading flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-primary/8 text-primary text-xs font-bold flex items-center justify-center">
+                  {index + 1}
+                </span>
+                Experience
+              </h3>
+              <button onClick={() => onRemove(exp.id)} className="text-muted hover:text-red-500 p-2 rounded-xl hover:bg-red-50 transition-all">
+                <Trash2 size={16} />
+              </button>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-semibold text-dubai-navy mb-1">
-                Job Title
-              </label>
-              <input
-                type="text"
-                value={exp.position}
-                onChange={(e) => onUpdate(exp.id, { position: e.target.value })}
-                placeholder="e.g. Marketing Manager"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-dubai-navy placeholder:text-gray-400 transition-all"
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-heading mb-1">Job Title</label>
+                <input type="text" value={exp.position} onChange={(e) => onUpdate(exp.id, { position: e.target.value })} placeholder="e.g. Marketing Manager" className={inputClass} />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-heading mb-1">Company</label>
+                <input type="text" value={exp.company} onChange={(e) => onUpdate(exp.id, { company: e.target.value })} placeholder="e.g. Emirates Group" className={inputClass} />
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-semibold text-dubai-navy mb-1">
-                Company
-              </label>
-              <input
-                type="text"
-                value={exp.company}
-                onChange={(e) => onUpdate(exp.id, { company: e.target.value })}
-                placeholder="e.g. Emirates Group"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-dubai-navy placeholder:text-gray-400 transition-all"
-              />
-            </div>
-          </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-semibold text-dubai-navy mb-1">
-                Start Date
-              </label>
-              <input
-                type="month"
-                value={exp.startDate}
-                onChange={(e) => onUpdate(exp.id, { startDate: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-dubai-navy transition-all"
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-heading mb-1">Start Date</label>
+                <input type="month" value={exp.startDate} onChange={(e) => onUpdate(exp.id, { startDate: e.target.value })} className={inputClass} />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-heading mb-1">End Date</label>
+                {exp.current ? (
+                  <div className="px-4 py-3.5 rounded-xl border border-primary/20 bg-primary/3 text-primary font-medium text-sm">Present</div>
+                ) : (
+                  <input type="month" value={exp.endDate} onChange={(e) => onUpdate(exp.id, { endDate: e.target.value })} className={inputClass} />
+                )}
+                <label className="flex items-center gap-2 mt-2 text-xs text-muted cursor-pointer">
+                  <input type="checkbox" checked={exp.current} onChange={(e) => onUpdate(exp.id, { current: e.target.checked, endDate: e.target.checked ? "" : exp.endDate })} className="accent-primary rounded" />
+                  Currently working here
+                </label>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-semibold text-dubai-navy mb-1">
-                End Date
-              </label>
-              {exp.current ? (
-                <div className="px-4 py-3 rounded-xl border border-dubai-gold/30 bg-dubai-gold/5 text-dubai-gold font-medium">
-                  Present
-                </div>
-              ) : (
-                <input
-                  type="month"
-                  value={exp.endDate}
-                  onChange={(e) =>
-                    onUpdate(exp.id, { endDate: e.target.value })
-                  }
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 text-dubai-navy transition-all"
-                />
-              )}
-              <label className="flex items-center gap-2 mt-2 text-sm text-gray-500 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={exp.current}
-                  onChange={(e) =>
-                    onUpdate(exp.id, {
-                      current: e.target.checked,
-                      endDate: e.target.checked ? "" : exp.endDate,
-                    })
-                  }
-                  className="accent-dubai-gold"
-                />
-                Currently working here
-              </label>
-            </div>
-          </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-dubai-navy mb-1">
-              Description
-            </label>
-            <textarea
-              value={exp.description}
-              onChange={(e) =>
-                onUpdate(exp.id, { description: e.target.value })
-              }
-              placeholder="Describe your key responsibilities and achievements. Use bullet points for best results:&#10;• Led a team of 10 marketing professionals&#10;• Increased brand awareness by 40%&#10;• Managed $500K annual budget"
-              rows={5}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-dubai-navy placeholder:text-gray-400 transition-all resize-none"
-            />
+            <div>
+              <label className="block text-xs font-semibold text-heading mb-1">Description</label>
+              <textarea value={exp.description} onChange={(e) => onUpdate(exp.id, { description: e.target.value })}
+                placeholder={"Describe your key achievements:\n• Led a team of 10 marketing professionals\n• Increased brand awareness by 40%\n• Managed $500K annual budget"}
+                rows={5} className={`${inputClass} resize-none`} />
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
       {data.length > 0 && (
-        <button
-          onClick={addNewExperience}
-          className="w-full py-3 rounded-xl border-2 border-dashed border-dubai-gold/40 text-dubai-gold font-semibold hover:bg-dubai-gold/5 transition-all"
-        >
-          <Plus className="inline mr-1" size={18} />
-          Add Another Experience
+        <button onClick={addNewExperience} className="w-full py-3.5 rounded-xl border-2 border-dashed border-primary/20 text-primary font-semibold hover:bg-primary/3 transition-all flex items-center justify-center gap-2">
+          <Plus size={18} /> Add Another Experience
         </button>
       )}
 
-      <div className="flex gap-3 pt-2">
-        <button
-          onClick={onBack}
-          className="flex-1 py-4 rounded-xl font-bold text-dubai-navy bg-gray-100 hover:bg-gray-200 transition-all"
-        >
-          ← Back
+      <div className="flex gap-3 pt-3">
+        <button onClick={onBack} className="flex-1 py-4 rounded-2xl font-bold text-body bg-surface-2 hover:bg-border transition-all flex items-center justify-center gap-2">
+          <ArrowLeft size={16} /> Back
         </button>
-        <button
-          onClick={onNext}
-          className="flex-[2] py-4 rounded-xl font-bold text-lg bg-dubai-gold text-white hover:brightness-110 active:scale-[0.98] shadow-lg shadow-dubai-gold/25 transition-all"
-        >
-          Continue to Education →
+        <button onClick={onNext} className="flex-[2] py-4 rounded-2xl font-bold text-base btn-primary text-white flex items-center justify-center gap-2 shadow-lg">
+          Continue <ArrowRight size={18} />
         </button>
       </div>
     </div>

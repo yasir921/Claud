@@ -1,6 +1,7 @@
 "use client";
 
 import { PersonalInfo } from "@/types/cv";
+import { ArrowRight, User } from "lucide-react";
 
 interface StepPersonalProps {
   data: PersonalInfo;
@@ -9,14 +10,8 @@ interface StepPersonalProps {
 }
 
 const dubaiCities = [
-  "Dubai",
-  "Abu Dhabi",
-  "Sharjah",
-  "Ajman",
-  "Ras Al Khaimah",
-  "Fujairah",
-  "Umm Al Quwain",
-  "Al Ain",
+  "Dubai", "Abu Dhabi", "Sharjah", "Ajman",
+  "Ras Al Khaimah", "Fujairah", "Umm Al Quwain", "Al Ain",
 ];
 
 export default function StepPersonal({ data, onChange, onNext }: StepPersonalProps) {
@@ -30,102 +25,69 @@ export default function StepPersonal({ data, onChange, onNext }: StepPersonalPro
     data.phone.trim() !== "" &&
     data.jobTitle.trim() !== "";
 
+  const inputClass =
+    "w-full px-4 py-3.5 rounded-xl border border-border bg-white text-heading placeholder:text-muted/60 transition-all duration-200 text-sm";
+
   return (
-    <div className="space-y-5 animate-in fade-in">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-dubai-navy">Personal Details</h2>
-        <p className="text-gray-500 mt-1">Let&apos;s start with your basic information</p>
+    <div className="space-y-5 animate-fade-in">
+      <div className="text-center mb-8">
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/5 flex items-center justify-center mx-auto mb-4">
+          <User className="text-primary" size={24} />
+        </div>
+        <h2 className="text-2xl font-extrabold text-heading">Personal Details</h2>
+        <p className="text-muted mt-1.5 text-sm">Let&apos;s start with your basic information</p>
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-dubai-navy mb-1.5">
-          Full Name *
+        <label className="block text-sm font-semibold text-heading mb-1.5">
+          Full Name <span className="text-primary">*</span>
         </label>
-        <input
-          type="text"
-          value={data.fullName}
-          onChange={(e) => updateField("fullName", e.target.value)}
-          placeholder="e.g. Ahmed Al Maktoum"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 text-dubai-navy placeholder:text-gray-400 transition-all"
-        />
+        <input type="text" value={data.fullName} onChange={(e) => updateField("fullName", e.target.value)} placeholder="e.g. Ahmed Al Maktoum" className={inputClass} />
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-dubai-navy mb-1.5">
-          Target Job Title *
+        <label className="block text-sm font-semibold text-heading mb-1.5">
+          Target Job Title <span className="text-primary">*</span>
         </label>
-        <input
-          type="text"
-          value={data.jobTitle}
-          onChange={(e) => updateField("jobTitle", e.target.value)}
-          placeholder="e.g. Senior Marketing Manager"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 text-dubai-navy placeholder:text-gray-400 transition-all"
-        />
+        <input type="text" value={data.jobTitle} onChange={(e) => updateField("jobTitle", e.target.value)} placeholder="e.g. Senior Marketing Manager" className={inputClass} />
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-dubai-navy mb-1.5">
-          Email Address *
+        <label className="block text-sm font-semibold text-heading mb-1.5">
+          Email Address <span className="text-primary">*</span>
         </label>
-        <input
-          type="email"
-          value={data.email}
-          onChange={(e) => updateField("email", e.target.value)}
-          placeholder="ahmed@example.com"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 text-dubai-navy placeholder:text-gray-400 transition-all"
-        />
+        <input type="email" value={data.email} onChange={(e) => updateField("email", e.target.value)} placeholder="ahmed@example.com" className={inputClass} />
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-dubai-navy mb-1.5">
-          Phone Number *
+        <label className="block text-sm font-semibold text-heading mb-1.5">
+          Phone Number <span className="text-primary">*</span>
         </label>
-        <input
-          type="tel"
-          value={data.phone}
-          onChange={(e) => updateField("phone", e.target.value)}
-          placeholder="+971 50 123 4567"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 text-dubai-navy placeholder:text-gray-400 transition-all"
-        />
+        <input type="tel" value={data.phone} onChange={(e) => updateField("phone", e.target.value)} placeholder="+971 50 123 4567" className={inputClass} />
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-dubai-navy mb-1.5">
-          Location
-        </label>
-        <select
-          value={data.location}
-          onChange={(e) => updateField("location", e.target.value)}
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 text-dubai-navy bg-white transition-all"
-        >
+        <label className="block text-sm font-semibold text-heading mb-1.5">Location</label>
+        <select value={data.location} onChange={(e) => updateField("location", e.target.value)} className={inputClass}>
           <option value="">Select your city</option>
           {dubaiCities.map((city) => (
-            <option key={city} value={city}>
-              {city}
-            </option>
+            <option key={city} value={city}>{city}</option>
           ))}
         </select>
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-dubai-navy mb-1.5">
-          LinkedIn Profile
-        </label>
-        <input
-          type="url"
-          value={data.linkedin}
-          onChange={(e) => updateField("linkedin", e.target.value)}
-          placeholder="linkedin.com/in/your-profile"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 text-dubai-navy placeholder:text-gray-400 transition-all"
-        />
+        <label className="block text-sm font-semibold text-heading mb-1.5">LinkedIn Profile</label>
+        <input type="url" value={data.linkedin} onChange={(e) => updateField("linkedin", e.target.value)} placeholder="linkedin.com/in/your-profile" className={inputClass} />
       </div>
 
       <button
         onClick={onNext}
         disabled={!isValid}
-        className="w-full py-4 rounded-xl font-bold text-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed bg-dubai-gold text-white hover:brightness-110 active:scale-[0.98] shadow-lg shadow-dubai-gold/25"
+        className="w-full py-4 rounded-2xl font-bold text-base transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:transform-none btn-primary text-white flex items-center justify-center gap-2 shadow-lg mt-3"
       >
-        Continue to Experience →
+        Continue to Experience
+        <ArrowRight size={18} />
       </button>
     </div>
   );

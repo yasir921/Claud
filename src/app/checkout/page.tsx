@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FileText, Shield, Loader2 } from "lucide-react";
-import { Suspense } from "react";
+import { FileText, Shield, Loader2, CheckCircle, Lock, ArrowLeft } from "lucide-react";
 
 function CheckoutContent() {
   const router = useRouter();
@@ -12,10 +11,9 @@ function CheckoutContent() {
   const [loading, setLoading] = useState(false);
 
   const prices = {
-    basic: { amount: "25 AED", usd: "~$7", name: "Professional CV" },
-    premium: { amount: "45 AED", usd: "~$12", name: "Premium Package" },
+    basic: { amount: "25 AED", usd: "~$7 USD", name: "Professional CV" },
+    premium: { amount: "45 AED", usd: "~$12 USD", name: "Premium Package" },
   };
-
   const selectedPrice = prices[tier];
 
   const handleCheckout = async () => {
@@ -27,7 +25,6 @@ function CheckoutContent() {
         body: JSON.stringify({ tier }),
       });
       const data = await response.json();
-
       if (data.url) {
         window.location.href = data.url;
       } else {
@@ -41,89 +38,70 @@ function CheckoutContent() {
   };
 
   return (
-    <div className="min-h-screen bg-dubai-off-white flex flex-col">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-100">
-        <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-center">
-          <span className="flex items-center gap-2 font-bold text-dubai-navy">
-            <FileText className="text-dubai-gold" size={24} />
-            CV<span className="text-dubai-gold">Dubai</span>
+    <div className="min-h-screen bg-gradient-to-b from-surface to-white flex flex-col">
+      <header className="glass border-b border-white/40">
+        <div className="max-w-lg mx-auto px-4 py-3.5 flex items-center justify-between">
+          <button onClick={() => router.push("/preview")} className="flex items-center gap-2 text-body font-medium text-sm">
+            <ArrowLeft size={18} /> Back
+          </button>
+          <span className="flex items-center gap-2.5 font-bold text-heading">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <FileText className="text-white" size={16} />
+            </div>
+            CV<span className="gradient-text">Dubai</span>
           </span>
+          <div className="w-16" />
         </div>
       </header>
 
       <div className="flex-1 flex items-center justify-center px-4 py-10">
-        <div className="max-w-md w-full space-y-6">
+        <div className="max-w-md w-full space-y-5 animate-fade-in-up">
           {/* Order Summary */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h2 className="text-xl font-bold text-dubai-navy mb-4">
-              Order Summary
-            </h2>
-            <div className="flex justify-between items-center py-3 border-b border-gray-100">
-              <span className="text-gray-600">{selectedPrice.name}</span>
-              <span className="font-bold text-dubai-navy">
-                {selectedPrice.amount}
-              </span>
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-border/50">
+            <h2 className="text-lg font-extrabold text-heading mb-4">Order Summary</h2>
+            <div className="flex justify-between items-center py-3 border-b border-border/50">
+              <span className="text-body">{selectedPrice.name}</span>
+              <span className="font-bold text-heading">{selectedPrice.amount}</span>
             </div>
-            <div className="flex justify-between items-center py-3">
-              <span className="font-bold text-dubai-navy">Total</span>
+            <div className="flex justify-between items-center py-4">
+              <span className="font-bold text-heading">Total</span>
               <div className="text-right">
-                <span className="text-2xl font-bold text-dubai-gold">
-                  {selectedPrice.amount}
-                </span>
-                <p className="text-xs text-gray-400">{selectedPrice.usd} USD</p>
+                <span className="text-3xl font-extrabold gradient-text">{selectedPrice.amount}</span>
+                <p className="text-xs text-muted">{selectedPrice.usd}</p>
               </div>
             </div>
           </div>
 
-          {/* What You Get */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h3 className="font-bold text-dubai-navy mb-3">
-              What&apos;s Included:
-            </h3>
-            <ul className="space-y-2 text-sm text-gray-600">
-              <li>&#10003; High-quality PDF download</li>
-              <li>&#10003; 3 professional templates</li>
-              <li>&#10003; ATS-optimized format</li>
-              {tier === "premium" && (
-                <>
-                  <li>&#10003; Cover letter template</li>
-                  <li>&#10003; LinkedIn summary</li>
-                </>
-              )}
+          {/* Included */}
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-border/50">
+            <h3 className="font-bold text-heading mb-3">What&apos;s Included:</h3>
+            <ul className="space-y-2.5">
+              {[
+                "High-quality PDF download",
+                "3 professional templates",
+                "ATS-optimized format",
+                ...(tier === "premium" ? ["Cover letter template", "LinkedIn summary"] : []),
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-2.5 text-sm text-body">
+                  <CheckCircle size={16} className="text-success flex-shrink-0" /> {item}
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Pay Button */}
-          <button
-            onClick={handleCheckout}
-            disabled={loading}
-            className="w-full py-4 bg-dubai-gold text-dubai-navy font-bold text-lg rounded-2xl hover:brightness-110 transition-all shadow-xl shadow-dubai-gold/30 disabled:opacity-50 flex items-center justify-center gap-2"
-          >
+          {/* Pay */}
+          <button onClick={handleCheckout} disabled={loading}
+            className="w-full py-4 btn-primary text-white font-bold text-lg rounded-2xl shadow-xl disabled:opacity-50 flex items-center justify-center gap-2">
             {loading ? (
-              <>
-                <Loader2 className="animate-spin" size={20} />
-                Redirecting to payment...
-              </>
+              <><Loader2 className="animate-spin" size={20} /> Redirecting to payment...</>
             ) : (
-              <>
-                <Shield size={20} />
-                Pay {selectedPrice.amount} — Secure Checkout
-              </>
+              <><Lock size={18} /> Pay {selectedPrice.amount} — Secure Checkout</>
             )}
           </button>
 
-          <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
-            <Shield size={12} />
-            Powered by Stripe. Your payment info is encrypted and secure.
+          <div className="flex items-center justify-center gap-2 text-xs text-muted">
+            <Shield size={12} /> Encrypted &amp; secure payment powered by Stripe
           </div>
-
-          <button
-            onClick={() => router.push("/preview")}
-            className="w-full text-center text-sm text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            ← Back to preview
-          </button>
         </div>
       </div>
     </div>
@@ -132,13 +110,11 @@ function CheckoutContent() {
 
 export default function CheckoutPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen flex items-center justify-center">
-          <Loader2 className="animate-spin text-dubai-gold" size={32} />
-        </div>
-      }
-    >
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-surface">
+        <Loader2 className="animate-spin text-primary" size={32} />
+      </div>
+    }>
       <CheckoutContent />
     </Suspense>
   );
