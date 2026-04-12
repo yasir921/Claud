@@ -1,7 +1,8 @@
 "use client";
 
 import { Experience } from "@/types/cv";
-import { Plus, Trash2, Briefcase, ArrowRight, ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { Plus, Trash2, Briefcase, ArrowRight, ArrowLeft, Sparkles, Loader2 } from "lucide-react";
 
 interface StepExperienceProps {
   data: Experience[];
@@ -15,6 +16,28 @@ interface StepExperienceProps {
 export default function StepExperience({
   data, onAdd, onUpdate, onRemove, onNext, onBack,
 }: StepExperienceProps) {
+  const [enhancingId, setEnhancingId] = useState<string | null>(null);
+
+  const enhanceDescription = async (expId: string, text: string, position: string) => {
+    if (!text.trim()) return;
+    setEnhancingId(expId);
+    try {
+      const res = await fetch("/api/enhance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "enhance-bullets", text, jobTitle: position }),
+      });
+      const data = await res.json();
+      if (data.result) {
+        onUpdate(expId, { description: data.result });
+      }
+    } catch {
+      // silently fail - user can still use manual text
+    } finally {
+      setEnhancingId(null);
+    }
+  };
+
   const addNewExperience = () => {
     onAdd({
       id: crypto.randomUUID(), company: "", position: "",
@@ -91,7 +114,21 @@ export default function StepExperience({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-heading mb-1">Description</label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-xs font-semibold text-heading">Description</label>
+                <button
+                  type="button"
+                  disabled={enhancingId === exp.id || !exp.description.trim()}
+                  onClick={() => enhanceDescription(exp.id, exp.description, exp.position)}
+                  className="flex items-center gap-1 text-xs font-semibold text-primary hover:underline disabled:opacity-30 disabled:cursor-not-allowed"
+                >
+                  {enhancingId === exp.id ? (
+                    <><Loader2 size={12} className="animate-spin" /> Enhancing...</>
+                  ) : (
+                    <><Sparkles size={12} /> Enhance with AI</>
+                  )}
+                </button>
+              </div>
               <textarea value={exp.description} onChange={(e) => onUpdate(exp.id, { description: e.target.value })}
                 placeholder={"Describe your key achievements:\n• Led a team of 10 marketing professionals\n• Increased brand awareness by 40%\n• Managed $500K annual budget"}
                 rows={5} className={`${inputClass} resize-none`} />

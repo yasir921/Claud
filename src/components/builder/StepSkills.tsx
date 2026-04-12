@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, Sparkles, ArrowLeft, Eye, Lightbulb } from "lucide-react";
+import { X, Sparkles, ArrowLeft, Eye, Lightbulb, Loader2 } from "lucide-react";
 
 interface StepSkillsProps {
   skills: string[];
@@ -26,6 +26,7 @@ export default function StepSkills({
 }: StepSkillsProps) {
   const [inputValue, setInputValue] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [generatingSummary, setGeneratingSummary] = useState(false);
 
   const addSkill = (skill: string) => {
     const trimmed = skill.trim();
@@ -46,11 +47,34 @@ export default function StepSkills({
     }
   };
 
-  const generateSummary = () => {
+  const generateSummary = async () => {
+    setGeneratingSummary(true);
+    try {
+      const res = await fetch("/api/enhance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "generate-summary",
+          jobTitle,
+          skills,
+          experiences: [],
+        }),
+      });
+      const data = await res.json();
+      if (data.result) {
+        onSummaryChange(data.result);
+        setGeneratingSummary(false);
+        return;
+      }
+    } catch {
+      // fall through to fallback
+    }
+    // Fallback if AI is not configured
     const skillsList = skills.slice(0, 5).join(", ");
     onSummaryChange(
       `Results-driven ${jobTitle || "professional"} with a proven track record of delivering impactful outcomes in the UAE market. Skilled in ${skillsList || "multiple disciplines"}, with a strong ability to lead cross-functional teams and drive strategic initiatives. Seeking to leverage extensive experience to contribute to organizational growth and excellence.`
     );
+    setGeneratingSummary(false);
   };
 
   const inputClass =
@@ -109,8 +133,12 @@ export default function StepSkills({
       <div>
         <div className="flex items-center justify-between mb-2">
           <label className="block text-sm font-semibold text-heading">Professional Summary</label>
-          <button onClick={generateSummary} className="flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
-            <Sparkles size={14} /> Auto-Generate
+          <button onClick={generateSummary} disabled={generatingSummary} className="flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline disabled:opacity-50">
+            {generatingSummary ? (
+              <><Loader2 size={14} className="animate-spin" /> Generating...</>
+            ) : (
+              <><Sparkles size={14} /> AI Generate</>
+            )}
           </button>
         </div>
         <textarea value={summary} onChange={(e) => onSummaryChange(e.target.value)}

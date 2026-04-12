@@ -18,7 +18,7 @@ import {
 
 export default function LandingPage() {
   const whatsappMessage = encodeURIComponent(
-    "Check out this CV builder - build a professional CV in 5 minutes! Perfect for anyone job hunting in Dubai right now."
+    "Hey! Found this amazing CV builder made for Dubai professionals. You can build a professional CV in 5 minutes - really helped me refresh mine. Check it out:"
   );
 
   return (
@@ -54,19 +54,20 @@ export default function LandingPage() {
           {/* Badge */}
           <div className="animate-fade-in-up inline-flex items-center gap-2 bg-primary/5 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-8 border border-primary/10">
             <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-            2,800+ professionals built their CV this week
+            Trusted by 2,800+ professionals across Dubai &amp; UAE
           </div>
 
           <h1 className="animate-fade-in-up text-5xl sm:text-6xl font-extrabold text-heading leading-[1.1] tracking-tight" style={{ animationDelay: "0.1s" }}>
-            Build a{" "}
-            <span className="gradient-text">Professional CV</span>
+            Ready for Your{" "}
+            <span className="gradient-text">Next Opportunity</span>
             <br />
-            in 5 Minutes
+            in Dubai?
           </h1>
 
           <p className="animate-fade-in-up text-lg sm:text-xl text-body mt-6 max-w-xl mx-auto leading-relaxed" style={{ animationDelay: "0.2s" }}>
-            Stop paying agencies AED 500+. Create a stunning, interview-winning
-            CV from your phone — designed for the Dubai &amp; UAE job market.
+            Whether you&apos;re exploring new roles or making a career move,
+            a great CV opens doors. Build yours in 5 minutes — designed
+            specifically for the Dubai &amp; UAE job market.
           </p>
 
           <div className="animate-fade-in-up flex flex-col sm:flex-row gap-3 justify-center mt-10" style={{ animationDelay: "0.3s" }}>
@@ -84,6 +85,14 @@ export default function LandingPage() {
               See How It Works
             </a>
           </div>
+
+          {/* Upload existing resume CTA */}
+          <p className="animate-fade-in-up text-sm text-muted mt-4" style={{ animationDelay: "0.35s" }}>
+            Already have a resume?{" "}
+            <Link href="/build" className="text-primary font-semibold hover:underline">
+              Upload it &amp; upgrade instantly
+            </Link>
+          </p>
 
           {/* Trust badges */}
           <div className="animate-fade-in-up flex items-center justify-center gap-6 sm:gap-8 mt-8 text-sm text-muted" style={{ animationDelay: "0.4s" }}>
@@ -161,8 +170,8 @@ export default function LandingPage() {
             {[
               {
                 icon: FileText,
-                title: "Fill Your Details",
-                desc: "Simple step-by-step form. Enter your experience, education, and skills in minutes.",
+                title: "Upload or Fill Details",
+                desc: "Upload your old resume to auto-fill, or start fresh with our simple step-by-step form.",
                 color: "from-primary/10 to-primary/5",
                 iconColor: "text-primary",
               },
@@ -276,20 +285,20 @@ export default function LandingPage() {
             {[
               {
                 name: "Sarah K.",
-                role: "Marketing Manager",
-                text: "Got 3 interview calls within a week of sending my new CV. The templates are incredibly professional!",
+                role: "Marketing Manager, Dubai",
+                text: "I was updating my CV for weeks until I found this. Uploaded my old resume, and it was transformed in minutes. Got 3 interview calls within a week!",
                 avatar: "S",
               },
               {
                 name: "Mohammed A.",
-                role: "Software Engineer",
-                text: "After getting laid off, I built my CV here in 5 minutes. Way better than what I paid AED 800 for before.",
+                role: "Software Engineer, Abu Dhabi",
+                text: "During my career transition, this tool was a lifesaver. Built a stunning CV in 5 minutes — way better than what I paid AED 800 for at an agency.",
                 avatar: "M",
               },
               {
                 name: "Priya S.",
-                role: "Finance Analyst",
-                text: "The AI suggestions made my experience sound 10x more impressive. Best AED 25 I ever spent on my career.",
+                role: "Finance Analyst, Dubai",
+                text: "The AI rewrote my bullet points and suddenly my experience looked 10x more impressive. Best AED 25 I ever spent on my career.",
                 avatar: "P",
               },
             ].map((t) => (
@@ -417,13 +426,14 @@ export default function LandingPage() {
 
         <div className="relative max-w-xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-heading tracking-tight">
-            Your Next Job Starts With
+            Your Next Chapter
             <br />
-            <span className="gradient-text">a Great CV</span>
+            <span className="gradient-text">Starts Here</span>
           </h2>
           <p className="text-body mt-4 max-w-md mx-auto leading-relaxed">
-            Don&apos;t let a bad CV hold you back. Build a professional one in 5
-            minutes and start getting interview calls today.
+            The Dubai market moves fast — make sure your CV keeps up. Upload
+            your old resume or start fresh, and walk away with something
+            that gets interviews.
           </p>
           <Link
             href="/build"

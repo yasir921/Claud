@@ -8,12 +8,16 @@ import StepPersonal from "@/components/builder/StepPersonal";
 import StepExperience from "@/components/builder/StepExperience";
 import StepEducation from "@/components/builder/StepEducation";
 import StepSkills from "@/components/builder/StepSkills";
+import ResumeUpload from "@/components/builder/ResumeUpload";
 import { FileText } from "lucide-react";
 
 export default function BuildPage() {
   const [step, setStep] = useState(1);
+  const [showUpload, setShowUpload] = useState(true);
   const router = useRouter();
   const store = useCVStore();
+
+  const hasExistingData = store.personalInfo.fullName.trim() !== "";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-surface to-white">
@@ -37,6 +41,18 @@ export default function BuildPage() {
       <ProgressBar currentStep={step} onStepClick={setStep} />
 
       <div className="max-w-lg mx-auto px-4 pb-12">
+        {/* Resume Upload - shown at step 1 if no data yet */}
+        {step === 1 && showUpload && !hasExistingData && (
+          <div className="mb-8 space-y-4">
+            <ResumeUpload onComplete={() => setShowUpload(false)} />
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-border" />
+              <span className="text-xs font-semibold text-muted">or start fresh below</span>
+              <div className="flex-1 h-px bg-border" />
+            </div>
+          </div>
+        )}
+
         {step === 1 && (
           <StepPersonal data={store.personalInfo} onChange={store.setPersonalInfo} onNext={() => setStep(2)} />
         )}
