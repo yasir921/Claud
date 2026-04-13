@@ -2,35 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const formData = await request.formData();
-    const file = formData.get("resume") as File;
+    const body = await request.json();
+    const { text } = body;
 
-    if (!file) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
-    }
-
-    // Extract text from PDF
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-
-    let text = "";
-
-    if (file.name.endsWith(".pdf")) {
-      const { PDFParse } = await import("pdf-parse");
-      const uint8 = new Uint8Array(arrayBuffer);
-      const parser = new PDFParse(uint8 as never);
-      const result = await parser.getText();
-      text = String(result);
-    } else if (file.name.endsWith(".txt")) {
-      text = buffer.toString("utf-8");
-    } else {
-      // For .doc/.docx, extract what we can as text
-      text = buffer.toString("utf-8").replace(/[^\x20-\x7E\n\r\t]/g, " ");
-    }
-
-    if (!text.trim()) {
+    if (!text || !text.trim()) {
       return NextResponse.json(
-        { error: "Could not extract text from this file. Please try a PDF." },
+        { error: "No text provided. Please try again." },
         { status: 400 }
       );
     }
@@ -122,7 +99,7 @@ Return this exact JSON structure (use empty strings for missing fields, empty ar
   const data = await response.json();
   const content = data.choices[0]?.message?.content || "{}";
 
-  // Extract JSON from response (handle cases where AI wraps in markdown)
+  // Extract JSON from response
   const jsonMatch = content.match(/\{[\s\S]*\}/);
   if (!jsonMatch) {
     throw new Error("Failed to extract JSON from AI response");
@@ -131,16 +108,19 @@ Return this exact JSON structure (use empty strings for missing fields, empty ar
   const parsed = JSON.parse(jsonMatch[0]);
 
   // Add IDs to experiences and education
+  let idCounter = 0;
+  const makeId = () => `parsed-${Date.now()}-${idCounter++}`;
+
   if (parsed.experiences) {
     parsed.experiences = parsed.experiences.map((exp: Record<string, unknown>) => ({
       ...exp,
-      id: crypto.randomUUID(),
+      id: makeId(),
     }));
   }
   if (parsed.education) {
     parsed.education = parsed.education.map((edu: Record<string, unknown>) => ({
       ...edu,
-      id: crypto.randomUUID(),
+      id: makeId(),
     }));
   }
 
@@ -150,9 +130,8 @@ Return this exact JSON structure (use empty strings for missing fields, empty ar
 function parseResumeBasic(text: string) {
   const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
 
-  // Basic extraction
   const emailMatch = text.match(/[\w.-]+@[\w.-]+\.\w+/);
-  const phoneMatch = text.match(/[\+]?[\d\s\-()]{7,15}/);
+  const phoneMatch = text.match(/[+]?[\d\s\-()]{7,15}/);
   const linkedinMatch = text.match(/linkedin\.com\/in\/[\w-]+/i);
 
   return {

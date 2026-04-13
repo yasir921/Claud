@@ -49,12 +49,32 @@ export default function ResumeUpload({ onComplete }: ResumeUploadProps) {
     setErrorMsg("");
 
     try {
-      const formData = new FormData();
-      formData.append("resume", file);
+      // Extract text client-side
+      let text = "";
+      if (file.type === "text/plain" || file.name.toLowerCase().endsWith(".txt")) {
+        text = await file.text();
+      } else {
+        // For PDF/DOC/DOCX, read as text (best-effort extraction)
+        // Modern browsers can extract text from many PDFs via text()
+        // For binary formats, we read as text and strip non-printable chars
+        const raw = await file.text();
+        // Extract readable text from the raw content
+        text = raw
+          .replace(/[^\x20-\x7E\n\r\t]/g, " ")
+          .replace(/\s{3,}/g, "\n")
+          .trim();
+      }
+
+      if (!text || text.trim().length < 20) {
+        throw new Error(
+          "Could not extract enough text from this file. Please try a .txt file or paste your resume text manually."
+        );
+      }
 
       const response = await fetch("/api/parse-resume", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
       });
 
       const data = await response.json();
@@ -87,7 +107,7 @@ export default function ResumeUpload({ onComplete }: ResumeUploadProps) {
             description?: string;
           }) => {
             store.addExperience({
-              id: exp.id || crypto.randomUUID(),
+              id: exp.id || `upload-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
               company: exp.company || "",
               position: exp.position || "",
               startDate: exp.startDate || "",
@@ -109,7 +129,7 @@ export default function ResumeUpload({ onComplete }: ResumeUploadProps) {
             year?: string;
           }) => {
             store.addEducation({
-              id: edu.id || crypto.randomUUID(),
+              id: edu.id || `upload-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
               institution: edu.institution || "",
               degree: edu.degree || "",
               field: edu.field || "",
