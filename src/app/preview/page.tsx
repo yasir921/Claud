@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCVStore } from "@/lib/cv-store";
 import CVPreview from "@/components/preview/CVPreview";
 import TemplateSelector from "@/components/preview/TemplateSelector";
-import { FileText, Download, Share2, ArrowLeft, CheckCircle, MessageCircle } from "lucide-react";
+import { FileText, Download, ArrowLeft, CheckCircle, MessageCircle } from "lucide-react";
 
 export default function PreviewPage() {
   const router = useRouter();
@@ -23,11 +23,11 @@ export default function PreviewPage() {
     <div className="min-h-screen bg-gradient-to-b from-surface to-white">
       {/* Header */}
       <header className="glass border-b border-white/40 sticky top-0 z-50">
-        <div className="max-w-2xl mx-auto px-4 py-3.5 flex items-center justify-between">
+        <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <button onClick={() => router.push("/build")} className="flex items-center gap-2 text-body font-medium text-sm hover:text-heading transition-colors">
             <ArrowLeft size={18} /> Edit CV
           </button>
-          <span className="flex items-center gap-2.5 font-bold text-heading">
+          <span className="flex items-center gap-2 font-bold text-sm sm:text-base text-heading">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
               <FileText className="text-white" size={16} />
             </div>
@@ -37,10 +37,10 @@ export default function PreviewPage() {
         </div>
       </header>
 
-      <div className="max-w-2xl mx-auto px-4 py-8 space-y-8 animate-fade-in-up">
+      <div className="w-full max-w-2xl lg:max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 sm:space-y-8 animate-fade-in-up">
         {/* Template Selector */}
         <div>
-          <h2 className="text-sm font-bold text-heading mb-3">Choose Template</h2>
+          <h2 className="text-xs sm:text-sm font-bold text-heading mb-2 sm:mb-3">Choose Template</h2>
           <TemplateSelector selected={store.selectedTemplate} onChange={store.setTemplate} />
         </div>
 
@@ -51,65 +51,65 @@ export default function PreviewPage() {
 
         {/* Pricing CTAs */}
         <div className="space-y-4">
-          <h2 className="text-xl font-extrabold text-heading text-center">
+          <h2 className="text-lg sm:text-xl font-extrabold text-heading text-center">
             Download Your <span className="gradient-text">Professional CV</span>
           </h2>
 
           {/* Basic */}
-          <button onClick={() => handleCheckout("basic")} className="w-full p-6 rounded-2xl bg-white border-2 border-primary/20 text-left transition-all hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 active:scale-[0.99] relative overflow-hidden group">
+          <button onClick={() => handleCheckout("basic")} className="w-full p-4 sm:p-6 rounded-2xl bg-white border-2 border-primary/20 text-left transition-all hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 active:scale-[0.99] relative overflow-hidden group">
             <div className="absolute top-0 right-0 px-3 py-1 bg-primary text-white text-[10px] font-bold rounded-bl-xl">MOST POPULAR</div>
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="text-lg font-bold text-heading mt-2">Professional CV</h3>
-                <ul className="text-sm text-body mt-3 space-y-1.5">
+            <div className="flex justify-between items-start gap-4">
+              <div className="min-w-0 flex-1">
+                <h3 className="text-base sm:text-lg font-bold text-heading mt-1 sm:mt-2">Professional CV</h3>
+                <ul className="text-xs sm:text-sm text-body mt-2 sm:mt-3 space-y-1 sm:space-y-1.5">
                   {["High-quality PDF download", "3 premium templates", "ATS-friendly format"].map(item => (
                     <li key={item} className="flex items-center gap-2">
-                      <CheckCircle size={14} className="text-success flex-shrink-0" /> {item}
+                      <CheckCircle size={13} className="text-success flex-shrink-0" /> {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="text-right mt-2">
-                <p className="text-3xl font-extrabold gradient-text">25</p>
-                <p className="text-xs text-muted font-medium">AED (~$7)</p>
+              <div className="text-right mt-1 sm:mt-2 flex-shrink-0">
+                <p className="text-2xl sm:text-3xl font-extrabold gradient-text">25</p>
+                <p className="text-[10px] sm:text-xs text-muted font-medium">AED (~$7)</p>
               </div>
             </div>
-            <div className="mt-5 py-3 btn-primary text-white font-bold rounded-xl text-center flex items-center justify-center gap-2 shadow-lg">
-              <Download size={18} /> Get My CV Now
+            <div className="mt-4 sm:mt-5 py-2.5 sm:py-3 btn-primary text-white font-bold rounded-xl text-center flex items-center justify-center gap-2 shadow-lg text-sm sm:text-base">
+              <Download size={16} /> Get My CV Now
             </div>
           </button>
 
           {/* Premium */}
-          <button onClick={() => handleCheckout("premium")} className="w-full p-6 rounded-2xl bg-gradient-to-br from-primary to-primary-dark text-white text-left transition-all hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1 active:scale-[0.99] relative overflow-hidden">
+          <button onClick={() => handleCheckout("premium")} className="w-full p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-primary to-primary-dark text-white text-left transition-all hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1 active:scale-[0.99] relative overflow-hidden">
             <div className="absolute top-0 right-0 px-3 py-1 bg-accent text-white text-[10px] font-bold rounded-bl-xl">BEST VALUE</div>
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="text-lg font-bold mt-2">Premium Package</h3>
-                <ul className="text-sm text-white/80 mt-3 space-y-1.5">
+            <div className="flex justify-between items-start gap-4">
+              <div className="min-w-0 flex-1">
+                <h3 className="text-base sm:text-lg font-bold mt-1 sm:mt-2">Premium Package</h3>
+                <ul className="text-xs sm:text-sm text-white/80 mt-2 sm:mt-3 space-y-1 sm:space-y-1.5">
                   {["Everything in Professional", "Cover letter template", "LinkedIn summary"].map(item => (
                     <li key={item} className="flex items-center gap-2">
-                      <CheckCircle size={14} className="text-accent-light flex-shrink-0" /> {item}
+                      <CheckCircle size={13} className="text-accent-light flex-shrink-0" /> {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="text-right mt-2">
-                <p className="text-3xl font-extrabold text-white">45</p>
-                <p className="text-xs text-white/50 font-medium">AED (~$12)</p>
+              <div className="text-right mt-1 sm:mt-2 flex-shrink-0">
+                <p className="text-2xl sm:text-3xl font-extrabold text-white">45</p>
+                <p className="text-[10px] sm:text-xs text-white/50 font-medium">AED (~$12)</p>
               </div>
             </div>
-            <div className="mt-5 py-3 bg-white text-primary font-bold rounded-xl text-center flex items-center justify-center gap-2 shadow-lg hover:bg-white/90 transition-all">
-              <Download size={18} /> Get Premium Package
+            <div className="mt-4 sm:mt-5 py-2.5 sm:py-3 bg-white text-primary font-bold rounded-xl text-center flex items-center justify-center gap-2 shadow-lg hover:bg-white/90 transition-all text-sm sm:text-base">
+              <Download size={16} /> Get Premium Package
             </div>
           </button>
         </div>
 
         {/* Share */}
-        <div className="text-center pt-2 pb-10">
-          <p className="text-sm text-muted mb-3">Know someone who needs a CV?</p>
+        <div className="text-center pt-2 pb-8 sm:pb-10">
+          <p className="text-xs sm:text-sm text-muted mb-3">Know someone who needs a CV?</p>
           <a href={`https://wa.me/?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-whatsapp text-white font-bold rounded-full hover:brightness-110 transition-all shadow-lg shadow-whatsapp/20">
-            <MessageCircle size={18} /> Share on WhatsApp
+            className="inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 bg-whatsapp text-white font-bold rounded-full hover:brightness-110 transition-all shadow-lg shadow-whatsapp/20 text-sm">
+            <MessageCircle size={16} /> Share on WhatsApp
           </a>
         </div>
       </div>

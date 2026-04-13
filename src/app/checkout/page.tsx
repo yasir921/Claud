@@ -40,11 +40,11 @@ function CheckoutContent() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-surface to-white flex flex-col">
       <header className="glass border-b border-white/40">
-        <div className="max-w-lg mx-auto px-4 py-3.5 flex items-center justify-between">
+        <div className="w-full max-w-2xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <button onClick={() => router.push("/preview")} className="flex items-center gap-2 text-body font-medium text-sm">
             <ArrowLeft size={18} /> Back
           </button>
-          <span className="flex items-center gap-2.5 font-bold text-heading">
+          <span className="flex items-center gap-2 font-bold text-sm sm:text-base text-heading">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
               <FileText className="text-white" size={16} />
             </div>
@@ -54,36 +54,36 @@ function CheckoutContent() {
         </div>
       </header>
 
-      <div className="flex-1 flex items-center justify-center px-4 py-10">
-        <div className="max-w-md w-full space-y-5 animate-fade-in-up">
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 py-8 sm:py-10">
+        <div className="w-full max-w-sm sm:max-w-md space-y-4 sm:space-y-5 animate-fade-in-up">
           {/* Order Summary */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-border/50">
-            <h2 className="text-lg font-extrabold text-heading mb-4">Order Summary</h2>
-            <div className="flex justify-between items-center py-3 border-b border-border/50">
-              <span className="text-body">{selectedPrice.name}</span>
-              <span className="font-bold text-heading">{selectedPrice.amount}</span>
+          <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-border/50">
+            <h2 className="text-base sm:text-lg font-extrabold text-heading mb-3 sm:mb-4">Order Summary</h2>
+            <div className="flex justify-between items-center py-2.5 sm:py-3 border-b border-border/50">
+              <span className="text-sm text-body">{selectedPrice.name}</span>
+              <span className="font-bold text-sm sm:text-base text-heading">{selectedPrice.amount}</span>
             </div>
-            <div className="flex justify-between items-center py-4">
-              <span className="font-bold text-heading">Total</span>
+            <div className="flex justify-between items-center py-3 sm:py-4">
+              <span className="font-bold text-sm sm:text-base text-heading">Total</span>
               <div className="text-right">
-                <span className="text-3xl font-extrabold gradient-text">{selectedPrice.amount}</span>
-                <p className="text-xs text-muted">{selectedPrice.usd}</p>
+                <span className="text-2xl sm:text-3xl font-extrabold gradient-text">{selectedPrice.amount}</span>
+                <p className="text-[10px] sm:text-xs text-muted">{selectedPrice.usd}</p>
               </div>
             </div>
           </div>
 
           {/* Included */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-border/50">
-            <h3 className="font-bold text-heading mb-3">What&apos;s Included:</h3>
-            <ul className="space-y-2.5">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-border/50">
+            <h3 className="font-bold text-sm sm:text-base text-heading mb-2 sm:mb-3">What&apos;s Included:</h3>
+            <ul className="space-y-2 sm:space-y-2.5">
               {[
                 "High-quality PDF download",
                 "3 professional templates",
                 "ATS-optimized format",
                 ...(tier === "premium" ? ["Cover letter template", "LinkedIn summary"] : []),
               ].map((item) => (
-                <li key={item} className="flex items-center gap-2.5 text-sm text-body">
-                  <CheckCircle size={16} className="text-success flex-shrink-0" /> {item}
+                <li key={item} className="flex items-center gap-2 text-xs sm:text-sm text-body">
+                  <CheckCircle size={14} className="text-success flex-shrink-0" /> {item}
                 </li>
               ))}
             </ul>
@@ -91,15 +91,15 @@ function CheckoutContent() {
 
           {/* Pay */}
           <button onClick={handleCheckout} disabled={loading}
-            className="w-full py-4 btn-primary text-white font-bold text-lg rounded-2xl shadow-xl disabled:opacity-50 flex items-center justify-center gap-2">
+            className="w-full py-3.5 sm:py-4 btn-primary text-white font-bold text-sm sm:text-lg rounded-2xl shadow-xl disabled:opacity-50 flex items-center justify-center gap-2">
             {loading ? (
-              <><Loader2 className="animate-spin" size={20} /> Redirecting to payment...</>
+              <><Loader2 className="animate-spin" size={18} /> Redirecting to payment...</>
             ) : (
-              <><Lock size={18} /> Pay {selectedPrice.amount} — Secure Checkout</>
+              <><Lock size={16} /> Pay {selectedPrice.amount} — Secure Checkout</>
             )}
           </button>
 
-          <div className="flex items-center justify-center gap-2 text-xs text-muted">
+          <div className="flex items-center justify-center gap-2 text-[10px] sm:text-xs text-muted">
             <Shield size={12} /> Encrypted &amp; secure payment powered by Stripe
           </div>
         </div>

@@ -23,12 +23,12 @@ export default function BuildPage() {
     <div className="min-h-screen bg-gradient-to-b from-surface to-white">
       {/* Header */}
       <header className="glass border-b border-white/40 sticky top-0 z-50">
-        <div className="max-w-lg mx-auto px-4 py-3.5 flex items-center justify-between">
-          <button onClick={() => router.push("/")} className="flex items-center gap-2.5">
+        <div className="w-full max-w-2xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+          <button onClick={() => router.push("/")} className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
               <FileText className="text-white" size={16} />
             </div>
-            <span className="font-bold text-heading">
+            <span className="font-bold text-sm sm:text-base text-heading">
               CV<span className="gradient-text">Dubai</span>
             </span>
           </button>
@@ -40,10 +40,10 @@ export default function BuildPage() {
 
       <ProgressBar currentStep={step} onStepClick={setStep} />
 
-      <div className="max-w-lg mx-auto px-4 pb-12">
+      <div className="w-full max-w-lg sm:max-w-xl md:max-w-2xl mx-auto px-4 sm:px-6 pb-12">
         {/* Resume Upload - shown at step 1 if no data yet */}
         {step === 1 && showUpload && !hasExistingData && (
-          <div className="mb-8 space-y-4">
+          <div className="mb-6 sm:mb-8 space-y-4">
             <ResumeUpload onComplete={() => setShowUpload(false)} />
             <div className="flex items-center gap-3">
               <div className="flex-1 h-px bg-border" />
