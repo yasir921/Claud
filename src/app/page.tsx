@@ -58,7 +58,7 @@ export default function LandingPage() {
           </div>
 
           <h1
-            className="animate-fade-in-up text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-heading leading-[1.15] tracking-tight"
+            className="animate-fade-in-up text-2xl sm:text-3xl lg:text-[2.75rem] xl:text-5xl font-extrabold text-heading leading-[1.15] tracking-tight"
             style={{ animationDelay: "0.1s" }}
           >
             Ready for Your{" "}
@@ -68,7 +68,7 @@ export default function LandingPage() {
           </h1>
 
           <p
-            className="animate-fade-in-up text-sm sm:text-base md:text-lg text-body mt-4 sm:mt-6 max-w-md sm:max-w-lg mx-auto leading-relaxed px-2"
+            className="animate-fade-in-up text-sm sm:text-base text-body mt-4 sm:mt-5 max-w-md sm:max-w-lg mx-auto leading-relaxed"
             style={{ animationDelay: "0.2s" }}
           >
             Whether you&apos;re exploring new roles or making a career move,
@@ -82,7 +82,7 @@ export default function LandingPage() {
           >
             <Link
               href="/build"
-              className="btn-primary inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 text-white font-bold text-base sm:text-lg rounded-2xl shadow-xl"
+              className="btn-primary inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-7 sm:py-3.5 text-white font-bold text-sm sm:text-base rounded-2xl shadow-xl"
             >
               Build My CV Now — Free
               <ArrowRight size={18} />
@@ -123,19 +123,16 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Floating CV preview mockup */}
-        <div
-          className="relative w-full max-w-xs sm:max-w-sm mx-auto mt-10 sm:mt-14 animate-fade-in-up"
-          style={{ animationDelay: "0.5s" }}
-        >
-          <div className="animate-float bg-white rounded-2xl shadow-2xl shadow-primary/10 border border-border p-4 sm:p-6">
-            <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
-              <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center flex-shrink-0">
-                <span className="text-xl sm:text-2xl font-bold gradient-text">A</span>
+        {/* Floating CV preview mockup — hidden on small, shown on large */}
+        <div className="hidden lg:block relative w-full max-w-xs mx-auto mt-10 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
+          <div className="animate-float bg-white rounded-2xl shadow-2xl shadow-primary/10 border border-border p-5">
+            <div className="flex items-start gap-3 mb-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center flex-shrink-0">
+                <span className="text-xl font-bold gradient-text">A</span>
               </div>
               <div className="min-w-0 flex-1">
-                <div className="h-3 sm:h-4 w-3/4 bg-heading/10 rounded-full" />
-                <div className="h-2.5 sm:h-3 w-1/2 bg-primary/10 rounded-full mt-2" />
+                <div className="h-3 w-3/4 bg-heading/10 rounded-full" />
+                <div className="h-2.5 w-1/2 bg-primary/10 rounded-full mt-2" />
                 <div className="h-2 w-full bg-muted/20 rounded-full mt-2" />
               </div>
             </div>
@@ -144,7 +141,7 @@ export default function LandingPage() {
               <div className="h-2 w-4/5 bg-surface-2 rounded-full" />
               <div className="h-2 w-3/4 bg-surface-2 rounded-full" />
             </div>
-            <div className="mt-3 sm:mt-4 pt-3 border-t border-border/50 flex gap-2">
+            <div className="mt-3 pt-3 border-t border-border/50 flex gap-2">
               <div className="h-5 w-16 bg-primary/8 rounded-full" />
               <div className="h-5 w-20 bg-accent/8 rounded-full" />
               <div className="h-5 w-14 bg-primary/8 rounded-full" />
@@ -162,7 +159,7 @@ export default function LandingPage() {
             { value: "89%", label: "Got Interviews" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <p className="text-xl sm:text-2xl md:text-3xl font-extrabold gradient-text">
+              <p className="text-lg sm:text-xl lg:text-2xl font-extrabold gradient-text">
                 {stat.value}
               </p>
               <p className="text-[10px] sm:text-xs text-muted mt-0.5 font-medium">{stat.label}</p>
@@ -176,7 +173,7 @@ export default function LandingPage() {
         <div className="w-full max-w-5xl mx-auto">
           <div className="text-center mb-8 sm:mb-10 lg:mb-14">
             <span className="text-xs sm:text-sm font-bold text-primary uppercase tracking-wider">Simple Process</span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-heading mt-2 sm:mt-3 tracking-tight">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-heading mt-2 sm:mt-3 tracking-tight">
               Three Steps to Your Dream CV
             </h2>
             <p className="text-sm sm:text-base text-body mt-2 sm:mt-3 max-w-md mx-auto">
@@ -184,7 +181,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 stagger">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 stagger">
             {[
               {
                 icon: FileText,
@@ -231,7 +228,7 @@ export default function LandingPage() {
         <div className="w-full max-w-5xl mx-auto">
           <div className="text-center mb-8 sm:mb-10 lg:mb-14">
             <span className="text-xs sm:text-sm font-bold text-primary uppercase tracking-wider">Why Choose Us</span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-heading mt-2 sm:mt-3 tracking-tight">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-heading mt-2 sm:mt-3 tracking-tight">
               Everything You Need to Get Hired
             </h2>
             <p className="text-sm sm:text-base text-body mt-2 sm:mt-3 max-w-lg mx-auto">
@@ -239,7 +236,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 stagger">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 stagger">
             {[
               {
                 icon: Sparkles,
@@ -294,12 +291,12 @@ export default function LandingPage() {
         <div className="w-full max-w-5xl mx-auto">
           <div className="text-center mb-8 sm:mb-10 lg:mb-14">
             <span className="text-xs sm:text-sm font-bold text-primary uppercase tracking-wider">Testimonials</span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-heading mt-2 sm:mt-3 tracking-tight">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-heading mt-2 sm:mt-3 tracking-tight">
               Loved by Dubai Professionals
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 stagger">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 stagger">
             {[
               {
                 name: "Sarah K.",
@@ -352,7 +349,7 @@ export default function LandingPage() {
         <div className="w-full max-w-5xl mx-auto">
           <div className="text-center mb-8 sm:mb-10 lg:mb-14">
             <span className="text-xs sm:text-sm font-bold text-primary uppercase tracking-wider">Pricing</span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-heading mt-2 sm:mt-3 tracking-tight">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-heading mt-2 sm:mt-3 tracking-tight">
               Unbeatable Value
             </h2>
             <p className="text-sm sm:text-base text-body mt-2 sm:mt-3 max-w-md mx-auto">
@@ -360,7 +357,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full max-w-2xl mx-auto">
             {/* Basic */}
             <div className="card-hover bg-white rounded-3xl p-5 sm:p-7 border border-border/60 shadow-sm relative">
               <div className="absolute -top-3 left-5 sm:left-6">
@@ -371,7 +368,7 @@ export default function LandingPage() {
               <div className="mt-2 sm:mt-3">
                 <h3 className="text-base sm:text-lg font-bold text-heading">Professional CV</h3>
                 <div className="mt-2 sm:mt-3 flex items-baseline gap-1">
-                  <span className="text-3xl sm:text-4xl font-extrabold gradient-text">25</span>
+                  <span className="text-2xl sm:text-3xl font-extrabold gradient-text">25</span>
                   <span className="text-base sm:text-lg font-semibold text-muted">AED</span>
                 </div>
                 <p className="text-[10px] sm:text-xs text-muted mt-1">One-time payment (~$7 USD)</p>
@@ -407,7 +404,7 @@ export default function LandingPage() {
               <div className="mt-2 sm:mt-3">
                 <h3 className="text-base sm:text-lg font-bold">Premium Package</h3>
                 <div className="mt-2 sm:mt-3 flex items-baseline gap-1">
-                  <span className="text-3xl sm:text-4xl font-extrabold text-white">45</span>
+                  <span className="text-2xl sm:text-3xl font-extrabold text-white">45</span>
                   <span className="text-base sm:text-lg font-semibold text-white/60">AED</span>
                 </div>
                 <p className="text-[10px] sm:text-xs text-white/50 mt-1">One-time payment (~$12 USD)</p>
@@ -443,7 +440,7 @@ export default function LandingPage() {
         <div className="absolute bottom-10 right-[10%] w-32 sm:w-48 h-32 sm:h-48 bg-accent blob" />
 
         <div className="relative w-full max-w-xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-heading tracking-tight">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-heading tracking-tight">
             Your Next Chapter
             <br />
             <span className="gradient-text">Starts Here</span>
@@ -455,7 +452,7 @@ export default function LandingPage() {
           </p>
           <Link
             href="/build"
-            className="btn-primary inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 text-white font-bold text-base sm:text-lg rounded-2xl shadow-xl mt-6 sm:mt-8"
+            className="btn-primary inline-flex items-center gap-2 px-5 py-3 sm:px-7 sm:py-3.5 text-white font-bold text-sm sm:text-base rounded-2xl shadow-xl mt-6 sm:mt-8"
           >
             Build My CV Now — It&apos;s Free to Start
             <ChevronRight size={18} />
