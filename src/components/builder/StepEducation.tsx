@@ -16,7 +16,7 @@ export default function StepEducation({
   data, onAdd, onUpdate, onRemove, onNext, onBack,
 }: StepEducationProps) {
   const addNewEducation = () => {
-    onAdd({ id: crypto.randomUUID(), institution: "", degree: "", field: "", year: "" });
+    onAdd({ id: `edu-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, institution: "", degree: "", field: "", year: "" });
   };
 
   const inputClass =
@@ -83,7 +83,7 @@ export default function StepEducation({
 
             <div>
               <label className="block text-xs font-semibold text-heading mb-1">Graduation Year</label>
-              <input type="text" value={edu.year} onChange={(e) => onUpdate(edu.id, { year: e.target.value })} placeholder="e.g. 2022" maxLength={4} className={inputClass} />
+              <input type="text" value={edu.year} onChange={(e) => { const v = e.target.value.replace(/\D/g, ""); onUpdate(edu.id, { year: v }); }} placeholder="e.g. 2022" maxLength={4} inputMode="numeric" className={inputClass} />
             </div>
           </div>
         ))}

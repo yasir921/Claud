@@ -462,26 +462,32 @@ export default function LandingPage() {
 
       {/* ─── Footer ─── */}
       <footer className="bg-white border-t border-border/50 py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-              <FileText className="text-white" size={14} />
+        <div className="w-full max-w-5xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                <FileText className="text-white" size={14} />
+              </div>
+              <span className="font-bold text-sm sm:text-base text-heading">
+                CV<span className="gradient-text">Dubai</span>
+              </span>
             </div>
-            <span className="font-bold text-sm sm:text-base text-heading">
-              CV<span className="gradient-text">Dubai</span>
-            </span>
+            <a
+              href={`https://wa.me/?text=${whatsappMessage}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-whatsapp text-white font-semibold rounded-full text-xs sm:text-sm hover:brightness-110 transition-all shadow-md"
+            >
+              <MessageCircle size={14} />
+              Share on WhatsApp
+            </a>
+            <div className="flex items-center gap-4 text-[10px] sm:text-xs text-muted">
+              <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+            </div>
           </div>
-          <a
-            href={`https://wa.me/?text=${whatsappMessage}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-whatsapp text-white font-semibold rounded-full text-xs sm:text-sm hover:brightness-110 transition-all shadow-md"
-          >
-            <MessageCircle size={14} />
-            Share on WhatsApp
-          </a>
-          <p className="text-[10px] sm:text-xs text-muted">
-            &copy; 2026 CVDubai. Built in Dubai, for Dubai.
+          <p className="text-[10px] sm:text-xs text-muted text-center mt-4">
+            &copy; 2026 CVDubai. Built in Dubai, for Dubai. All data is stored locally in your browser.
           </p>
         </div>
       </footer>

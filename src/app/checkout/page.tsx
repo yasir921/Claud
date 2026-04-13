@@ -2,6 +2,7 @@
 
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { FileText, Shield, Loader2, CheckCircle, Lock, ArrowLeft } from "lucide-react";
 
 function CheckoutContent() {
@@ -9,6 +10,7 @@ function CheckoutContent() {
   const searchParams = useSearchParams();
   const tier = (searchParams.get("tier") as "basic" | "premium") || "basic";
   const [loading, setLoading] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
   const prices = {
     basic: { amount: "25 AED", usd: "~$7 USD", name: "Professional CV" },
@@ -89,9 +91,26 @@ function CheckoutContent() {
             </ul>
           </div>
 
+          {/* Consent */}
+          <label className="flex items-start gap-2.5 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
+              className="mt-0.5 accent-primary w-4 h-4 rounded flex-shrink-0"
+            />
+            <span className="text-xs text-body leading-relaxed">
+              I agree to the{" "}
+              <Link href="/terms" target="_blank" className="text-primary font-semibold hover:underline">Terms of Service</Link>
+              {" "}and{" "}
+              <Link href="/privacy" target="_blank" className="text-primary font-semibold hover:underline">Privacy Policy</Link>.
+              I understand that the digital service will be performed immediately upon payment and I waive any cooling-off period rights.
+            </span>
+          </label>
+
           {/* Pay */}
-          <button onClick={handleCheckout} disabled={loading}
-            className="w-full py-3.5 sm:py-4 btn-primary text-white font-bold text-sm sm:text-lg rounded-2xl shadow-xl disabled:opacity-50 flex items-center justify-center gap-2">
+          <button onClick={handleCheckout} disabled={loading || !agreed}
+            className="w-full py-3.5 sm:py-4 btn-primary text-white font-bold text-sm sm:text-lg rounded-2xl shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
             {loading ? (
               <><Loader2 className="animate-spin" size={18} /> Redirecting to payment...</>
             ) : (

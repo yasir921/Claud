@@ -40,7 +40,7 @@ export default function StepExperience({
 
   const addNewExperience = () => {
     onAdd({
-      id: crypto.randomUUID(), company: "", position: "",
+      id: `exp-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, company: "", position: "",
       startDate: "", endDate: "", current: false, description: "",
     });
   };
